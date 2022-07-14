@@ -1,7 +1,8 @@
 # task_management_app
 
-Fajar Gema Ramadhan
+Fajar Gema Ramadhan (20200120037)
 TI-SE 1/4
+
 Membuat Aplikasi Task Management.
 
 Menggunakan Fitur GetX
