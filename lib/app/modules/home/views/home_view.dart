@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:task_management_app/app/Utils/styles/AppColors.dart';
 import 'package:task_management_app/app/Utils/widgets/MyTask.dart';
+import 'package:task_management_app/app/Utils/widgets/PeopleYouMayKnow.dart';
 import 'package:task_management_app/app/Utils/widgets/myfriends.dart';
-import 'package:task_management_app/app/Utils/widgets/upcomingtask.dart';
-import 'package:task_management_app/app/routes/app_pages.dart';
+import 'package:task_management_app/app/data/controller/auth_controller.dart';
 
 import '../../../Utils/widgets/header.dart';
 import '../../../Utils/widgets/sidebar.dart';
@@ -14,11 +14,13 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  final authCon = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerKey,
-      drawer: const SizedBox(width: 150, child: const Sidebar()),
+      drawer: const SizedBox(width: 150, child: Sidebar()),
       backgroundColor: AppColors.primaryBg,
       body: SafeArea(
         child: Row(
@@ -49,7 +51,7 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               ),
                               const SizedBox(
-                                width: 15,
+                                width: 10,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +64,7 @@ class HomeView extends GetView<HomeController> {
                                     ),
                                   ),
                                   Text(
-                                    'Manage task easy',
+                                    'Manage task made easy',
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: AppColors.primaryText,
@@ -77,15 +79,15 @@ class HomeView extends GetView<HomeController> {
                                 size: 30,
                               ),
                               const SizedBox(
-                                width: 15,
+                                width: 5,
                               ),
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(30),
-                                child: const CircleAvatar(
+                                child: CircleAvatar(
                                   backgroundColor: Colors.amber,
                                   radius: 25,
-                                  foregroundImage:
-                                      AssetImage('assets/Images/foto.png'),
+                                  foregroundImage: NetworkImage(
+                                      authCon.auth.currentUser!.photoURL!),
                                 ),
                               ),
                             ],
@@ -95,7 +97,7 @@ class HomeView extends GetView<HomeController> {
                   Expanded(
                     child: Container(
                       padding: !context.isPhone
-                          ? const EdgeInsets.all(30)
+                          ? const EdgeInsets.all(50)
                           : const EdgeInsets.all(20),
                       margin: !context.isPhone
                           ? const EdgeInsets.all(10)
@@ -113,34 +115,47 @@ class HomeView extends GetView<HomeController> {
                             height: Get.height * 0.4,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  'My Task',
+                              children: [
+                                const Text(
+                                  'People You May Know',
                                   style: TextStyle(
                                       color: AppColors.primaryText,
                                       fontSize: 25),
                                 ),
-                                SizedBox(
-                                  height: 15,
+                                const SizedBox(
+                                  height: 10,
                                 ),
                                 // My task
-                                MyTask(),
+                                PeopleYouMayKnow(),
                               ],
                             ),
                           ),
                           !context.isPhone
                               ? Expanded(
                                   child: Row(
-                                    children: const [
-                                      UpcomingTask(),
+                                    children: [
+                                      MyTask(),
                                       MyFriend(),
                                     ],
                                   ),
                                 )
-                              : const UpcomingTask(),
+                              : Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'My Task',
+                                        style: TextStyle(
+                                            color: AppColors.primaryText,
+                                            fontSize: 25),
+                                      ),
+                                      MyTask(),
+                                    ],
+                                  ),
+                                ),
                         ],
                       ),
-                      // content / isi page / screen
                     ),
                   ),
                 ],

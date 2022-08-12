@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -8,6 +9,8 @@ import 'package:task_management_app/app/Utils/widgets/myfriends.dart';
 import 'package:task_management_app/app/Utils/widgets/sidebar.dart';
 import 'package:task_management_app/app/data/controller/auth_controller.dart';
 
+import '../../../Utils/widgets/PeopleYouMayKnow.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/friends_controller.dart';
 
 class FriendsView extends GetView<FriendsController> {
@@ -18,7 +21,8 @@ class FriendsView extends GetView<FriendsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerKey,
-      drawer: const SizedBox(width: 150, child: const Sidebar()),
+      resizeToAvoidBottomInset: false,
+      drawer: const SizedBox(width: 150, child: Sidebar()),
       backgroundColor: AppColors.primaryBg,
       body: SafeArea(
         child: Row(
@@ -51,7 +55,7 @@ class FriendsView extends GetView<FriendsController> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    width: 15,
+                                    width: 10,
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -65,7 +69,7 @@ class FriendsView extends GetView<FriendsController> {
                                         ),
                                       ),
                                       Text(
-                                        'Manage task easy',
+                                        'Manage task made easy',
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: AppColors.primaryText,
@@ -80,15 +84,15 @@ class FriendsView extends GetView<FriendsController> {
                                     size: 30,
                                   ),
                                   const SizedBox(
-                                    width: 15,
+                                    width: 5,
                                   ),
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(30),
-                                    child: const CircleAvatar(
+                                    child: CircleAvatar(
                                       backgroundColor: Colors.amber,
                                       radius: 25,
                                       foregroundImage: NetworkImage(
-                                          'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
+                                          authCon.auth.currentUser!.photoURL!),
                                     ),
                                   ),
                                 ],
@@ -145,96 +149,43 @@ class FriendsView extends GetView<FriendsController> {
                             ? BorderRadius.circular(50)
                             : BorderRadius.circular(30),
                       ),
-                      child: Obx(() => authCon.hasilPencarion.isEmpty
-                          ? Column(children: [
-                              const Text(
-                                "People You may know",
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  color: AppColors.primaryText,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 200,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  shrinkWrap: true,
-                                  clipBehavior: Clip.antiAlias,
-                                  itemCount: 10,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Stack(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            child: const Image(
-                                              image: NetworkImage(
-                                                  'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
-                                            ),
-                                          ),
-                                          const Positioned(
-                                            bottom: 10,
-                                            left: 50,
-                                            child: Text(
-                                              "Imron Papa",
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                              bottom: 0,
-                                              right: 0,
-                                              child: SizedBox(
-                                                height: 36,
-                                                width: 36,
-                                                child: ElevatedButton(
-                                                    onPressed: () {},
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      padding: EdgeInsets.zero,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(50),
-                                                      ),
-                                                    ),
-                                                    child: const Icon(
-                                                      Ionicons
-                                                          .add_circle_outline,
-                                                    )),
-                                              ))
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              const MyFriend()
-                            ])
-                          : ListView.builder(
-                              padding: EdgeInsets.all(8),
-                              shrinkWrap: true,
-                              itemCount: authCon.hasilPencarion.length,
-                              itemBuilder: (context, index) => ListTile(
-                                leading: ClipRRect(
-                                  borderRadius: BorderRadius.circular(30),
-                                  child: Image(
-                                    image: NetworkImage(
-                                        authCon.hasilPencarion[index]['photo']),
+                      child: Obx(
+                        () => authCon.hasilPencarion.isEmpty
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'People You May Know',
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      color: AppColors.primaryText,
+                                    ),
                                   ),
+                                  PeopleYouMayKnow(),
+                                  MyFriend()
+                                ],
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: authCon.hasilPencarion.length,
+                                itemBuilder: (context, index) => ListTile(
+                                  onTap: () => authCon.addFriends(
+                                      authCon.hasilPencarion[index]['email']),
+                                  leading: ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image(
+                                      image: NetworkImage(authCon
+                                          .hasilPencarion[index]['photo']),
+                                    ),
+                                  ),
+                                  title: Text(
+                                      authCon.hasilPencarion[index]['name']),
+                                  subtitle: Text(
+                                      authCon.hasilPencarion[index]['email']),
+                                  trailing: const Icon(Ionicons.add),
                                 ),
-                                title:
-                                    Text(authCon.hasilPencarion[index]['name']),
-                                subtitle: Text(
-                                    authCon.hasilPencarion[index]['email']),
-                                trailing: Icon(Ionicons.add),
                               ),
-                            )),
+                      ),
                     ),
                   ),
                 ],

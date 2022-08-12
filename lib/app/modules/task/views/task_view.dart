@@ -1,21 +1,26 @@
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:task_management_app/app/Utils/styles/AppColors.dart';
+import 'package:task_management_app/app/Utils/widgets/MyTask.dart';
 import 'package:task_management_app/app/Utils/widgets/header.dart';
 import 'package:task_management_app/app/Utils/widgets/sidebar.dart';
+import 'package:task_management_app/app/data/controller/auth_controller.dart';
 
+import '../../../Utils/widgets/prosesTask.dart';
 import '../controllers/task_controller.dart';
 
 class TaskView extends GetView<TaskController> {
   final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  final authCon = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerKey,
-      drawer: const SizedBox(width: 150, child: const Sidebar()),
+      drawer: const SizedBox(width: 150, child: Sidebar()),
       backgroundColor: AppColors.primaryBg,
       body: SafeArea(
         child: Row(
@@ -46,7 +51,7 @@ class TaskView extends GetView<TaskController> {
                                 ),
                               ),
                               const SizedBox(
-                                width: 15,
+                                width: 10,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +64,7 @@ class TaskView extends GetView<TaskController> {
                                     ),
                                   ),
                                   Text(
-                                    'Manage task easy',
+                                    'Manage task made easy',
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: AppColors.primaryText,
@@ -74,15 +79,15 @@ class TaskView extends GetView<TaskController> {
                                 size: 30,
                               ),
                               const SizedBox(
-                                width: 15,
+                                width: 5,
                               ),
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(30),
-                                child: const CircleAvatar(
+                                child: CircleAvatar(
                                   backgroundColor: Colors.amber,
                                   radius: 25,
                                   foregroundImage: NetworkImage(
-                                      'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
+                                      authCon.auth.currentUser!.photoURL!),
                                 ),
                               ),
                             ],
@@ -106,103 +111,17 @@ class TaskView extends GetView<TaskController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'My Task',
                             style: TextStyle(
-                                color: AppColors.primaryText, fontSize: 25),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Expanded(
-                            child: ListView.builder(
-                              clipBehavior: Clip.antiAlias,
-                              // scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: 8,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  height: 200,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: AppColors.cardBg,
-                                  ),
-                                  margin: const EdgeInsets.all(10),
-                                  padding: const EdgeInsets.all(20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                            child: const CircleAvatar(
-                                              backgroundColor: Colors.amber,
-                                              radius: 20,
-                                              foregroundImage: NetworkImage(
-                                                  'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
-                                            ),
-                                          ),
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                            child: const CircleAvatar(
-                                              backgroundColor: Colors.amber,
-                                              radius: 20,
-                                              foregroundImage: NetworkImage(
-                                                  'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                          Container(
-                                            height: 25,
-                                            width: 80,
-                                            color: AppColors.primaryBg,
-                                            child: const Center(
-                                              child: Text(
-                                                '100 %',
-                                                style: TextStyle(
-                                                  color: AppColors.primaryText,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      Container(
-                                        height: 25,
-                                        width: 80,
-                                        color: AppColors.primaryBg,
-                                        child: const Center(
-                                          child: Text(
-                                            '10 / 10 Task',
-                                            style: TextStyle(
-                                              color: AppColors.primaryText,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const Text(
-                                        'Pemrograman Mobile',
-                                        style: TextStyle(
-                                            color: AppColors.primaryText,
-                                            fontSize: 20),
-                                      ),
-                                      const Text(
-                                        'Deadline Sisa 1 Hari Lagi',
-                                        style: TextStyle(
-                                            color: AppColors.primaryText,
-                                            fontSize: 15),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
+                              color: AppColors.primaryText,
+                              fontSize: 25,
                             ),
                           ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          MyTask()
                         ],
                       ),
                     ),
@@ -214,24 +133,13 @@ class TaskView extends GetView<TaskController> {
         ),
       ),
       floatingActionButton: Align(
-        alignment: Alignment(0.95, 0.95),
+        alignment: const Alignment(0.95, 0.95),
         child: FloatingActionButton.extended(
           onPressed: () {
-            Get.bottomSheet(Container(
-              margin: context.isPhone
-                  ? EdgeInsets.zero
-                  : const EdgeInsets.only(left: 150, right: 150),
-              height: Get.height,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20),
-                    topLeft: Radius.circular(20)),
-                color: Colors.white,
-              ),
-            ));
+            addEditTask(context: context, type: 'Add', docId: '');
           },
-          label: Text("Add Task"),
-          icon: Icon(Ionicons.add_circle_outline),
+          label: const Text('Add Task'),
+          icon: const Icon(Ionicons.add),
         ),
       ),
     );

@@ -7,14 +7,21 @@ import 'package:task_management_app/app/routes/app_pages.dart';
 
 class AuthController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
   UserCredential? _userCredential;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  late TextEditingController searchFriendsController;
+  late TextEditingController searchFriendsController,
+      titleController,
+      descriptionController,
+      dueDateController;
 
   @override
   void onInit() {
     super.onInit();
     searchFriendsController = TextEditingController();
+    titleController = TextEditingController();
+    descriptionController = TextEditingController();
+    dueDateController = TextEditingController();
   }
 
   @override
@@ -26,6 +33,9 @@ class AuthController extends GetxController {
   void onClose() {
     super.onClose();
     searchFriendsController.dispose();
+    titleController.dispose();
+    descriptionController.dispose();
+    dueDateController.dispose();
   }
 
   Future signInWithGoogle() async {
@@ -43,7 +53,7 @@ class AuthController extends GetxController {
     );
     print(googleUser!.email);
     // Once signed in, return the UserCredential
-    await FirebaseAuth.instance
+    await auth
         .signInWithCredential(credential)
         .then((value) => _userCredential = value);
 
@@ -83,7 +93,7 @@ class AuthController extends GetxController {
   }
 
   Future logout() async {
-    await FirebaseAuth.instance.signOut();
+    await auth.signOut();
     await GoogleSignIn().signOut();
     Get.offAllNamed(Routes.LOGIN);
   }
@@ -117,5 +127,126 @@ class AuthController extends GetxController {
     }
     kataCari.refresh();
     hasilPencarion.refresh();
+  }
+
+  void addFriends(String _emailFriends) async {
+    CollectionReference friends = firestore.collection('friends');
+
+    final cekFriends = await friends.doc(auth.currentUser!.email).get();
+    // cek data ada atau tidak
+    if (cekFriends.data() == null) {
+      await friends.doc(auth.currentUser!.email).set({
+        'emailMe': auth.currentUser!.email,
+        'emailFriends': [_emailFriends],
+      }).whenComplete(
+          () => Get.snackbar("Friends", "Friends succesfully added"));
+    } else {
+      await friends.doc(auth.currentUser!.email).set({
+        'emailFriends': FieldValue.arrayUnion([_emailFriends]),
+      }, SetOptions(merge: true)).whenComplete(
+          () => Get.snackbar("Friends", "Friends succesfully added"));
+    }
+    kataCari.clear();
+    hasilPencarion.clear();
+    searchFriendsController.clear();
+    Get.back();
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamFriends() {
+    return firestore
+        .collection('friends')
+        .doc(auth.currentUser!.email)
+        .snapshots();
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamUsers(String email) {
+    return firestore.collection('users').doc(email).snapshots();
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getPeople() async {
+    CollectionReference friendsCollec = firestore.collection('friends');
+
+    final cekFriends = await friendsCollec.doc(auth.currentUser!.email).get();
+    var listFriends =
+        (cekFriends.data() as Map<String, dynamic>)['emailFriends'] as List;
+    QuerySnapshot<Map<String, dynamic>> hasil = await firestore
+        .collection('users')
+        .where('email', whereNotIn: listFriends)
+        .get();
+
+    return hasil;
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamTask(String taskId) {
+    return firestore.collection('task').doc(taskId).snapshots();
+  }
+
+  Future<void> saveUpdateTask(
+      {String? titel,
+      String? description,
+      String? dueDate,
+      String? docId,
+      String? type}) async {
+    print(titel);
+    print(description);
+    print(dueDate);
+    print(docId);
+    print(type);
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    formKey.currentState!.save();
+    CollectionReference taskColl = firestore.collection('task');
+    CollectionReference usersColl = firestore.collection('users');
+    var taskId = DateTime.now().toIso8601String();
+    if (type == 'Add') {
+      await taskColl.doc(taskId).set({
+        'title': titel,
+        'description': description,
+        'dueDate': dueDate,
+        'status': '0',
+        'total_task': '0',
+        'total_task_finished': '0',
+        'task_detail': [],
+        'asign_to': [auth.currentUser!.email],
+        'created_by': auth.currentUser!.email,
+      }).whenComplete(() async {
+        await usersColl.doc(auth.currentUser!.email).set({
+          'task_id': FieldValue.arrayUnion([taskId])
+        }, SetOptions(merge: true));
+        Get.back();
+        Get.snackbar('Task', 'Successfully ${type}ed');
+      }).catchError((error) {
+        Get.snackbar('Task', 'Failed to $type');
+      });
+    } else {
+      await taskColl.doc(docId).update({
+        'title': titel,
+        'description': description,
+        'dueDate': dueDate,
+      }).whenComplete(() async {
+        // await usersColl.doc(auth.currentUser!.email).set({
+        //   'task_id': FieldValue.arrayUnion([taskId])
+        // }, SetOptions(merge: true));
+        Get.back();
+        Get.snackbar('Task', 'Successfully ${type}ed');
+      }).catchError((error) {
+        Get.snackbar('Task', 'Failed to $type');
+      });
+    }
+  }
+
+  void deleteTask(String taskId) async {
+    CollectionReference taskColl = firestore.collection('task');
+    CollectionReference usersColl = firestore.collection('users');
+
+    await taskColl.doc(taskId).delete().whenComplete(() async {
+      await usersColl.doc(auth.currentUser!.email).set({
+        'task_id': FieldValue.arrayRemove([taskId])
+      }, SetOptions(merge: true));
+    });
+    Get.back();
+    Get.snackbar('Task', 'Successfully deleted');
   }
 }

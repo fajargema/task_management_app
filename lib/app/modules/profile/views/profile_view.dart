@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:task_management_app/app/Utils/styles/AppColors.dart';
 import 'package:task_management_app/app/Utils/widgets/MyTask.dart';
+import 'package:task_management_app/app/Utils/widgets/PeopleYouMayKnow.dart';
 import 'package:task_management_app/app/Utils/widgets/Profile.dart';
 import 'package:task_management_app/app/Utils/widgets/header.dart';
+import 'package:task_management_app/app/Utils/widgets/profilewidget.dart';
 import 'package:task_management_app/app/Utils/widgets/sidebar.dart';
 import 'package:task_management_app/app/data/controller/auth_controller.dart';
 import 'package:task_management_app/app/routes/app_pages.dart';
@@ -13,13 +15,14 @@ import 'package:task_management_app/app/routes/app_pages.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  final authC = Get.find<AuthController>();
   final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  final authC = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerKey,
-      drawer: const SizedBox(width: 150, child: const Sidebar()),
+      drawer: const SizedBox(width: 150, child: Sidebar()),
       backgroundColor: AppColors.primaryBg,
       body: SafeArea(
         child: Row(
@@ -50,7 +53,7 @@ class ProfileView extends GetView<ProfileController> {
                                 ),
                               ),
                               const SizedBox(
-                                width: 15,
+                                width: 10,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +66,7 @@ class ProfileView extends GetView<ProfileController> {
                                     ),
                                   ),
                                   Text(
-                                    'Manage task easy',
+                                    'Manage task made easy',
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: AppColors.primaryText,
@@ -72,14 +75,6 @@ class ProfileView extends GetView<ProfileController> {
                                 ],
                               ),
                               const Spacer(),
-                              const Icon(
-                                Ionicons.notifications,
-                                color: AppColors.primaryText,
-                                size: 30,
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
                               GestureDetector(
                                 onTap: () {
                                   Get.defaultDialog(
@@ -97,16 +92,34 @@ class ProfileView extends GetView<ProfileController> {
                                   );
                                 },
                                 child: Row(
-                                  children: const [
-                                    Text(
-                                      'Sign Out',
-                                      style: TextStyle(
-                                        color: AppColors.primaryText,
-                                        fontSize: 18,
-                                      ),
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: const [
+                                        Text(
+                                          'Sign',
+                                          style: TextStyle(
+                                            color: AppColors.primaryText,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Out',
+                                          style: TextStyle(
+                                            color: AppColors.primaryText,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
+                                    ),
+                                    const Icon(
+                                      Ionicons.log_out_outline,
+                                      color: AppColors.primaryText,
+                                      size: 30,
                                     ),
                                   ],
                                 ),
@@ -118,7 +131,7 @@ class ProfileView extends GetView<ProfileController> {
                   Expanded(
                     child: Container(
                       padding: !context.isPhone
-                          ? const EdgeInsets.all(30)
+                          ? const EdgeInsets.all(50)
                           : const EdgeInsets.all(20),
                       margin: !context.isPhone
                           ? const EdgeInsets.all(10)
@@ -132,20 +145,19 @@ class ProfileView extends GetView<ProfileController> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Profile(),
-                          // SizedBox(height: 20),
-                          Text(
-                            'My Task',
+                        children: [
+                          ProfileWidget(),
+                          const Text(
+                            'People You May Know',
                             style: TextStyle(
                                 color: AppColors.primaryText, fontSize: 25),
                           ),
-                          SizedBox(
-                            height: 15,
+                          const SizedBox(
+                            height: 5,
                           ),
                           SizedBox(
-                            height: 200,
-                            child: MyTask(),
+                            height: Get.height * 0.27, // 200,
+                            child: PeopleYouMayKnow(),
                           ),
                         ],
                       ),
