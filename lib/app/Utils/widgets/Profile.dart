@@ -19,8 +19,8 @@ class Profile extends StatelessWidget {
                     child: CircleAvatar(
                       backgroundColor: Colors.amber,
                       radius: 150,
-                      foregroundImage:
-                          NetworkImage('assets/Images/foto.png'),
+                      foregroundImage: NetworkImage(
+                          'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                     ),
                   ),
                 ),
@@ -58,8 +58,8 @@ class Profile extends StatelessWidget {
                     child: CircleAvatar(
                       backgroundColor: Colors.amber,
                       radius: 100,
-                      foregroundImage:
-                          NetworkImage('assets/Images/foto.png'),
+                      foregroundImage: NetworkImage(
+                          'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                     ),
                   ),
                   SizedBox(

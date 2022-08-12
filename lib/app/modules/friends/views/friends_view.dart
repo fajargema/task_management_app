@@ -59,7 +59,7 @@ class FriendsView extends GetView<FriendsController> {
                                     ),
                                   ),
                                   Text(
-                                    'Manage task easy with friends',
+                                    'Manage task easy',
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: AppColors.primaryText,
@@ -81,8 +81,8 @@ class FriendsView extends GetView<FriendsController> {
                                 child: const CircleAvatar(
                                   backgroundColor: Colors.amber,
                                   radius: 25,
-                                  foregroundImage:
-                                      NetworkImage('assets/Images/foto.png'),
+                                  foregroundImage: NetworkImage(
+                                      'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                                 ),
                               ),
                             ],
@@ -128,7 +128,7 @@ class FriendsView extends GetView<FriendsController> {
                                         borderRadius: BorderRadius.circular(30),
                                         child: const Image(
                                           image: NetworkImage(
-                                              'assets/Images/foto.png'),
+                                              'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                                         ),
                                       ),
                                       const Positioned(
@@ -158,7 +158,7 @@ class FriendsView extends GetView<FriendsController> {
                                                             50),
                                                   ),
                                                 ),
-                                                child: Icon(
+                                                child: const Icon(
                                                   Ionicons.add_circle_outline,
                                                 )),
                                           ))

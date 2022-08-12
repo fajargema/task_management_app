@@ -63,7 +63,7 @@ class ProfileView extends GetView<ProfileController> {
                                     ),
                                   ),
                                   Text(
-                                    'Manage task easy with friends',
+                                    'Manage task easy',
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: AppColors.primaryText,

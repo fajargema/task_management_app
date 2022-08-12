@@ -62,7 +62,7 @@ class HomeView extends GetView<HomeController> {
                                     ),
                                   ),
                                   Text(
-                                    'Manage task easy with friends',
+                                    'Manage task easy',
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: AppColors.primaryText,
@@ -85,7 +85,7 @@ class HomeView extends GetView<HomeController> {
                                   backgroundColor: Colors.amber,
                                   radius: 25,
                                   foregroundImage:
-                                      AssetImage('assets\Images\profile.png'),
+                                      AssetImage('assets/Images/foto.png'),
                                 ),
                               ),
                             ],

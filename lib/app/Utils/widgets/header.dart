@@ -29,7 +29,7 @@ class header extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Manage task easy with friends',
+                  'Manage task easy',
                   style: TextStyle(
                     fontSize: 15,
                     color: AppColors.primaryText,

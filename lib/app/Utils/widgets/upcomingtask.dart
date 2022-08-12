@@ -49,7 +49,7 @@ class UpcomingTask extends StatelessWidget {
                                 backgroundColor: Colors.amber,
                                 radius: 20,
                                 foregroundImage: NetworkImage(
-                                    'assets/Images/foto.png'),
+                                    'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                               ),
                             ),
                             ClipRRect(
@@ -58,7 +58,7 @@ class UpcomingTask extends StatelessWidget {
                                 backgroundColor: Colors.amber,
                                 radius: 20,
                                 foregroundImage: NetworkImage(
-                                    'assets/Images/foto.png'),
+                                    'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                               ),
                             ),
                             const Spacer(),
@@ -123,7 +123,7 @@ class UpcomingTask extends StatelessWidget {
                                 backgroundColor: Colors.amber,
                                 radius: 20,
                                 foregroundImage: NetworkImage(
-                                    'assets/Images/foto.png'),
+                                    'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                               ),
                             ),
                             ClipRRect(
@@ -132,7 +132,7 @@ class UpcomingTask extends StatelessWidget {
                                 backgroundColor: Colors.amber,
                                 radius: 20,
                                 foregroundImage: NetworkImage(
-                                    'assets/Images/foto.png'),
+                                    'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                               ),
                             ),
                             const Spacer(),

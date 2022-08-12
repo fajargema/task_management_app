@@ -59,7 +59,7 @@ class TaskView extends GetView<TaskController> {
                                     ),
                                   ),
                                   Text(
-                                    'Manage task easy with friends',
+                                    'Manage task easy',
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: AppColors.primaryText,
@@ -81,8 +81,8 @@ class TaskView extends GetView<TaskController> {
                                 child: const CircleAvatar(
                                   backgroundColor: Colors.amber,
                                   radius: 25,
-                                  foregroundImage:
-                                      NetworkImage('assets/Images/foto.png'),
+                                  foregroundImage: NetworkImage(
+                                      'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                                 ),
                               ),
                             ],
@@ -142,7 +142,7 @@ class TaskView extends GetView<TaskController> {
                                               backgroundColor: Colors.amber,
                                               radius: 20,
                                               foregroundImage: NetworkImage(
-                                                  'assets/Images/foto.png'),
+                                                  'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                                             ),
                                           ),
                                           ClipRRect(
@@ -152,7 +152,7 @@ class TaskView extends GetView<TaskController> {
                                               backgroundColor: Colors.amber,
                                               radius: 20,
                                               foregroundImage: NetworkImage(
-                                                  'assets/Images/foto.png'),
+                                                  'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                                             ),
                                           ),
                                           const Spacer(),

@@ -9,7 +9,7 @@ class MyTask extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 185,
       child: ListView(
         clipBehavior: Clip.antiAlias,
         scrollDirection: Axis.horizontal,
@@ -33,8 +33,8 @@ class MyTask extends StatelessWidget {
                       child: const CircleAvatar(
                         backgroundColor: Colors.amber,
                         radius: 20,
-                        foregroundImage:
-                            NetworkImage('assets/Images/foto.png'),
+                        foregroundImage: NetworkImage(
+                            'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                       ),
                     ),
                     ClipRRect(
@@ -42,8 +42,8 @@ class MyTask extends StatelessWidget {
                       child: const CircleAvatar(
                         backgroundColor: Colors.amber,
                         radius: 20,
-                        foregroundImage:
-                            NetworkImage('assets/Images/foto.png'),
+                        foregroundImage: NetworkImage(
+                            'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                       ),
                     ),
                     const Spacer(),
@@ -105,8 +105,8 @@ class MyTask extends StatelessWidget {
                       child: const CircleAvatar(
                         backgroundColor: Colors.amber,
                         radius: 20,
-                        foregroundImage:
-                            NetworkImage('assets/Images/foto.png'),
+                        foregroundImage: NetworkImage(
+                            'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                       ),
                     ),
                     ClipRRect(
@@ -114,8 +114,8 @@ class MyTask extends StatelessWidget {
                       child: const CircleAvatar(
                         backgroundColor: Colors.amber,
                         radius: 20,
-                        foregroundImage:
-                            NetworkImage('assets/Images/foto.png'),
+                        foregroundImage: NetworkImage(
+                            'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                       ),
                     ),
                     const Spacer(),
@@ -177,8 +177,8 @@ class MyTask extends StatelessWidget {
                       child: const CircleAvatar(
                         backgroundColor: Colors.amber,
                         radius: 20,
-                        foregroundImage:
-                            NetworkImage('assets/Images/foto.png'),
+                        foregroundImage: NetworkImage(
+                            'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                       ),
                     ),
                     ClipRRect(
@@ -186,8 +186,8 @@ class MyTask extends StatelessWidget {
                       child: const CircleAvatar(
                         backgroundColor: Colors.amber,
                         radius: 20,
-                        foregroundImage:
-                            NetworkImage('assets/Images/foto.png'),
+                        foregroundImage: NetworkImage(
+                            'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                       ),
                     ),
                     const Spacer(),
@@ -249,8 +249,8 @@ class MyTask extends StatelessWidget {
                       child: const CircleAvatar(
                         backgroundColor: Colors.amber,
                         radius: 20,
-                        foregroundImage:
-                            NetworkImage('assets/Images/foto.png'),
+                        foregroundImage: NetworkImage(
+                            'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                       ),
                     ),
                     ClipRRect(
@@ -258,8 +258,8 @@ class MyTask extends StatelessWidget {
                       child: const CircleAvatar(
                         backgroundColor: Colors.amber,
                         radius: 20,
-                        foregroundImage:
-                            NetworkImage('assets/Images/foto.png'),
+                        foregroundImage: NetworkImage(
+                            'https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/06/26/4162943265.jpg'),
                       ),
                     ),
                     const Spacer(),
